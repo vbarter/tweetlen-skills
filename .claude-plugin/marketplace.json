@@ -1,0 +1,63 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "tweetlen-skills",
+  "owner": {
+    "name": "vbarter"
+  },
+  "metadata": {
+    "description": "Twitter/X data analysis skills powered by Tweetlen API",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "api-skills",
+      "description": "Twitter/X API endpoint wrappers for user, tweet, search, community, list, trends, space, jobs",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/tweetlen-api-user",
+        "./skills/tweetlen-api-tweet",
+        "./skills/tweetlen-api-search",
+        "./skills/tweetlen-api-community",
+        "./skills/tweetlen-api-list",
+        "./skills/tweetlen-api-trends",
+        "./skills/tweetlen-api-space",
+        "./skills/tweetlen-api-jobs"
+      ]
+    },
+    {
+      "name": "analysis-skills",
+      "description": "Multi-step user and tweet analysis workflows",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/tweetlen-user-profile",
+        "./skills/tweetlen-tweet-analysis",
+        "./skills/tweetlen-user-comparison",
+        "./skills/tweetlen-influence-report"
+      ]
+    },
+    {
+      "name": "research-skills",
+      "description": "Topic research, trend monitoring, community and list exploration",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/tweetlen-topic-research",
+        "./skills/tweetlen-trend-monitor",
+        "./skills/tweetlen-community-explorer",
+        "./skills/tweetlen-list-explorer"
+      ]
+    },
+    {
+      "name": "utility-skills",
+      "description": "Quick user lookup and job search utilities",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/tweetlen-user-lookup",
+        "./skills/tweetlen-job-search"
+      ]
+    }
+  ]
+}
