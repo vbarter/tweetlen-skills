@@ -1,112 +1,209 @@
-# Tweetlen Skills for Claude Code
+<div align="center">
 
-> 基于 Tweetlen API 的 Twitter/X 数据分析技能集
+# Tweetlen Skills
 
-> **⚠️ 前置条件：申请并配置 API Key**
+**面向 Claude Code 的 Twitter/X 数据分析技能集**
+
+[![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://github.com/vbarter/tweetlen-skills)
+[![Skills](https://img.shields.io/badge/skills-18-green.svg)](#技能一览)
+[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
+
+让 Claude Code 变身 Twitter/X 数据分析助手。
+查询用户、分析推文、研究话题、监控趋势——全程自然语言交互。
+
+[**English**](README.md) | [**中文**](README.zh.md) | [**日本語**](README.ja.md)
+
+</div>
+
+---
+
+## 前置条件
+
+> [!IMPORTANT]
+> **使用本 Skills 需要 Tweetlen API Key**
 >
-> 使用本 Skills 前，你需要：
->
-> **第一步：申请 Key**
-> 1. 访问 [api.tweetlen.com](https://api.tweetlen.com) 注册账号
+> 1. 访问 **[api.tweetlen.com](https://api.tweetlen.com)** 注册账号
 > 2. 在控制台创建 API Key（格式：`twtl_xxx`）
->
-> **第二步：配置 Key**（任选一种）
->
-> 推荐：写入 Claude Code 配置（一次配置，永久生效）：
-> ```bash
-> # 编辑 ~/.claude/settings.json
-> {
->   "env": {
->     "TWEETLEN_API_KEY": "twtl_your_key_here"
->   }
-> }
-> ```
->
-> 或：设置环境变量：
-> ```bash
-> export TWEETLEN_API_KEY=twtl_your_key_here
-> ```
->
-> 或：写入项目级配置（`.claude/settings.local.json`，不会被 git 提交）：
-> ```json
-> {
->   "env": {
->     "TWEETLEN_API_KEY": "twtl_your_key_here"
->   }
-> }
-> ```
->
-> 所有 Skills 均通过 Tweetlen API 获取 Twitter/X 数据。
+> 3. 按以下任一方式配置 Key：
 
-## 功能特性
+<details open>
+<summary><b>方式一：写入 Claude Code 配置（推荐）</b></summary>
 
-Tweetlen Skills 分为 4 个插件组：
+编辑 `~/.claude/settings.json`，一次配置，所有项目通用：
 
-- **api-skills** - Twitter/X API 端点封装，覆盖用户、推文、搜索、社区、列表、趋势、Space 和招聘
-- **analysis-skills** - 多步骤分析工作流，包括用户画像、推文分析、用户对比和影响力报告
-- **research-skills** - 话题研究、趋势监控、社区和列表探索工作流
-- **utility-skills** - 快速用户查询和职位搜索工具
+```json
+{
+  "env": {
+    "TWEETLEN_API_KEY": "twtl_your_key_here"
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>方式二：环境变量</b></summary>
+
+```bash
+export TWEETLEN_API_KEY=twtl_your_key_here
+```
+
+</details>
+
+<details>
+<summary><b>方式三：项目级配置</b></summary>
+
+在项目根目录创建 `.claude/settings.local.json`（不会被 git 提交）：
+
+```json
+{
+  "env": {
+    "TWEETLEN_API_KEY": "twtl_your_key_here"
+  }
+}
+```
+
+</details>
 
 ## 安装
 
 ```bash
-# 1. 添加 marketplace
+# 添加 marketplace
 /plugin marketplace add vbarter/tweetlen-skills
 
-# 2. 安装需要的插件
+# 安装需要的插件
 /plugin install api-skills@tweetlen-skills
 /plugin install analysis-skills@tweetlen-skills
 /plugin install research-skills@tweetlen-skills
 /plugin install utility-skills@tweetlen-skills
 ```
 
+## 快速上手
+
+```
+你: 分析一下 @elonmusk 这个账号
+你: 大家在推特上怎么讨论 "Claude AI"？
+你: 对比 @openai 和 @anthropic
+你: 现在全球什么话题最热？
+你: 帮我查一下 @naval
+```
+
+Claude Code 会自动选择并执行合适的 skill。
+
 ## 技能一览
 
-| 技能 | 插件 | 描述 |
-|------|------|------|
-| `tweetlen-api-user` | api-skills | 获取用户资料、粉丝、关注列表和媒体 |
-| `tweetlen-api-tweet` | api-skills | 获取推文详情、回复、引用、转发和点赞 |
-| `tweetlen-api-search` | api-skills | 搜索推文、用户和内容 |
-| `tweetlen-api-community` | api-skills | 浏览社区详情、成员和时间线 |
-| `tweetlen-api-list` | api-skills | 浏览列表详情、成员和时间线 |
-| `tweetlen-api-trends` | api-skills | 获取各地区热门趋势 |
-| `tweetlen-api-space` | api-skills | 获取 Twitter Space 详情 |
-| `tweetlen-api-jobs` | api-skills | 搜索和查看职位列表 |
-| `tweetlen-user-profile` | analysis-skills | 生成全面的用户画像分析报告 |
-| `tweetlen-tweet-analysis` | analysis-skills | 分析推文互动和内容模式 |
-| `tweetlen-user-comparison` | analysis-skills | 多账号横向对比分析 |
-| `tweetlen-influence-report` | analysis-skills | 生成 KOL 影响力和传播力报告 |
-| `tweetlen-topic-research` | research-skills | 跨推文、用户和社区的话题研究 |
-| `tweetlen-trend-monitor` | research-skills | 监控和分析热门趋势 |
-| `tweetlen-community-explorer` | research-skills | 深入探索社区结构和活跃度 |
-| `tweetlen-list-explorer` | research-skills | 探索精选列表及其成员 |
-| `tweetlen-user-lookup` | utility-skills | 快速用户信息查询 |
-| `tweetlen-job-search` | utility-skills | 搜索 Twitter 职位信息 |
+### API Skills — 端点封装
+
+底层构建块。每个 skill 封装一类 Twitter/X API 端点，提供参数说明和调用示例。
+
+| 技能 | 端点数 | 功能 |
+|------|:------:|------|
+| `tweetlen-api-user` | 16 | 用户资料、粉丝、关注、推文、回复、媒体、高光 |
+| `tweetlen-api-tweet` | 7 | 推文详情、评论、转推、引用 |
+| `tweetlen-api-search` | 4 | 全文搜索（v1/v2/v3）、自动补全 |
+| `tweetlen-api-community` | 10 | 社区搜索、话题、成员、版主、推文 |
+| `tweetlen-api-list` | 5 | 列表搜索、详情、成员、粉丝、时间线 |
+| `tweetlen-api-trends` | 2 | 可用地区、按地区查趋势 |
+| `tweetlen-api-space` | 1 | Space 音频房间详情 |
+| `tweetlen-api-jobs` | 3 | 职位搜索、详情、地区建议 |
+
+### Analysis Skills — 分析工作流
+
+组合多个 API 调用 + 分析逻辑，生成结构化报告。
+
+| 技能 | 功能 |
+|------|------|
+| `tweetlen-user-profile` | 综合用户画像：资料 + 推文 + 粉丝 + 互动指标 |
+| `tweetlen-tweet-analysis` | 推文深度分析：评论 + 转推 + 引用 + 情感倾向 |
+| `tweetlen-user-comparison` | 双账号横向对比分析 |
+| `tweetlen-influence-report` | KOL 影响力评估 + 等级分类 |
+
+### Research Skills — 研究工作流
+
+多步骤研究工作流，用于趋势和话题分析。
+
+| 技能 | 功能 |
+|------|------|
+| `tweetlen-topic-research` | 话题舆情研究：搜索 + 关键声音 + 评论分析 |
+| `tweetlen-trend-monitor` | 按地区监控热点趋势 + 热门推文上下文 |
+| `tweetlen-community-explorer` | 社区深度探索：结构、成员、版主、内容 |
+| `tweetlen-list-explorer` | 列表探索：成员、时间线、粉丝分析 |
+
+### Utility Skills — 快捷工具
+
+| 技能 | 功能 |
+|------|------|
+| `tweetlen-user-lookup` | 快速查找用户：用户名 → rest_id + 基本信息 |
+| `tweetlen-job-search` | 搜索 Twitter/X 职位，支持多条件筛选 |
 
 ## 使用示例
 
-**分析用户画像：**
+### 分析用户
 
 ```
-/tweetlen-user-profile @elonmusk
+你: 分析用户 @naval
+你: Who is @pmarca? Give me a full profile analysis.
+你: @elonmusk のプロフィールを分析して
 ```
 
-**研究某个话题：**
+### 话题研究
 
 ```
-/tweetlen-topic-research "人工智能" --lang zh
+你: 推特上大家怎么看 "AI 监管"？
+你: What's Twitter saying about "AI regulation"?
+你: 研究一下大家对 GPT-5 的看法
 ```
 
-**对比两个账号：**
+### 趋势监控
 
 ```
-/tweetlen-user-comparison @openai @anthropic
+你: 日本现在什么话题最火？
+你: 看看美国现在的热门趋势
+你: What's trending worldwide?
 ```
 
-## API 文档
+### 账号对比
 
-完整的 API 文档和密钥获取，请访问 [api.tweetlen.com](https://api.tweetlen.com)。
+```
+你: 对比 @openai 和 @anthropic
+你: Compare @Google and @Microsoft
+```
+
+### 社区探索
+
+```
+你: 探索 AI 相关的 Twitter 社区
+你: Explore the "Generative AI" community
+```
+
+## 架构
+
+```
+┌──────────────────────────────────────────────┐
+│              Claude Code + Skills             │
+├──────────┬──────────┬───────────┬─────────────┤
+│ Analysis │ Research │  Utility  │    API      │
+│ Skills   │ Skills   │  Skills   │   Skills    │
+├──────────┴──────────┴───────────┴─────────────┤
+│           Tweetlen API (api.tweetlen.com)      │
+│              Authorization: Bearer twtl_xxx    │
+├──────────────────────────────────────────────-┤
+│              Twitter/X 平台                    │
+└───────────────────────────────────────────────┘
+```
+
+## API 参考
+
+| 基础 URL | 认证方式 | 请求方法 | 分页方式 |
+|----------|---------|---------|---------|
+| `https://api.tweetlen.com/v2` | `Bearer twtl_xxx` | GET | 基于 cursor |
+
+完整 API 文档请访问 **[api.tweetlen.com](https://api.tweetlen.com)**。
+
+## 贡献
+
+欢迎提 Issue 或提交 Pull Request！
 
 ## 许可证
 
-MIT
+[MIT](LICENSE)

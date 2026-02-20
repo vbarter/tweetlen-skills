@@ -1,112 +1,209 @@
-# Tweetlen Skills for Claude Code
+<div align="center">
 
-> Twitter/X data analysis skills powered by Tweetlen API
+# Tweetlen Skills
 
-> **⚠️ Prerequisite: Get and Configure Your API Key**
+**Twitter/X Data Analysis Skills for Claude Code**
+
+[![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://github.com/vbarter/tweetlen-skills)
+[![Skills](https://img.shields.io/badge/skills-18-green.svg)](#skills-overview)
+[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
+
+Turn Claude Code into a powerful Twitter/X analytics assistant.
+Query users, analyze tweets, research topics, and monitor trends — all through natural language.
+
+[**English**](README.md) | [**中文**](README.zh.md) | [**日本語**](README.ja.md)
+
+</div>
+
+---
+
+## Prerequisites
+
+> [!IMPORTANT]
+> **You need a Tweetlen API Key to use these skills.**
 >
-> Before using these skills, you need to:
->
-> **Step 1: Get your key**
-> 1. Visit [api.tweetlen.com](https://api.tweetlen.com) and create an account
+> 1. Sign up at **[api.tweetlen.com](https://api.tweetlen.com)**
 > 2. Create an API Key in the dashboard (format: `twtl_xxx`)
->
-> **Step 2: Configure your key** (choose one)
->
-> Recommended — add to Claude Code settings (one-time setup, works everywhere):
-> ```bash
-> # Edit ~/.claude/settings.json
-> {
->   "env": {
->     "TWEETLEN_API_KEY": "twtl_your_key_here"
->   }
-> }
-> ```
->
-> Or — set as environment variable:
-> ```bash
-> export TWEETLEN_API_KEY=twtl_your_key_here
-> ```
->
-> Or — add to project-level config (`.claude/settings.local.json`, git-ignored):
-> ```json
-> {
->   "env": {
->     "TWEETLEN_API_KEY": "twtl_your_key_here"
->   }
-> }
-> ```
->
-> All skills call the Tweetlen API to fetch Twitter/X data.
+> 3. Configure the key using one of the methods below:
 
-## Features
+<details open>
+<summary><b>Option 1: Claude Code Settings (Recommended)</b></summary>
 
-Tweetlen Skills is organized into 4 plugin groups:
+Add to `~/.claude/settings.json` — one-time setup, works across all projects:
 
-- **api-skills** - Direct Twitter/X API endpoint wrappers for users, tweets, search, communities, lists, trends, spaces, and jobs
-- **analysis-skills** - Multi-step analysis workflows for user profiling, tweet analysis, user comparison, and influence reports
-- **research-skills** - Topic research, trend monitoring, community and list exploration workflows
-- **utility-skills** - Quick user lookup and job search utilities
+```json
+{
+  "env": {
+    "TWEETLEN_API_KEY": "twtl_your_key_here"
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>Option 2: Environment Variable</b></summary>
+
+```bash
+export TWEETLEN_API_KEY=twtl_your_key_here
+```
+
+</details>
+
+<details>
+<summary><b>Option 3: Project-Level Config</b></summary>
+
+Create `.claude/settings.local.json` in your project root (git-ignored):
+
+```json
+{
+  "env": {
+    "TWEETLEN_API_KEY": "twtl_your_key_here"
+  }
+}
+```
+
+</details>
 
 ## Installation
 
 ```bash
-# 1. Add the marketplace
+# Add the marketplace
 /plugin marketplace add vbarter/tweetlen-skills
 
-# 2. Install the plugins you need
+# Install the plugins you need
 /plugin install api-skills@tweetlen-skills
 /plugin install analysis-skills@tweetlen-skills
 /plugin install research-skills@tweetlen-skills
 /plugin install utility-skills@tweetlen-skills
 ```
 
+## Quick Start
+
+```
+You: Analyze the Twitter account @elonmusk
+You: What's Twitter saying about "Claude AI"?
+You: Compare @openai and @anthropic
+You: What's trending worldwide right now?
+You: Look up user @naval
+```
+
+Claude Code will automatically select and execute the appropriate skill.
+
 ## Skills Overview
 
-| Skill | Plugin | Description |
-|-------|--------|-------------|
-| `tweetlen-api-user` | api-skills | Fetch user profiles, followers, followings, and media |
-| `tweetlen-api-tweet` | api-skills | Get tweet details, replies, quotes, retweets, and likes |
-| `tweetlen-api-search` | api-skills | Search tweets, users, and content |
-| `tweetlen-api-community` | api-skills | Explore community details, members, and timelines |
-| `tweetlen-api-list` | api-skills | Browse list details, members, and timelines |
-| `tweetlen-api-trends` | api-skills | Get trending topics by location |
-| `tweetlen-api-space` | api-skills | Get Twitter Space details |
-| `tweetlen-api-jobs` | api-skills | Search and view job listings |
-| `tweetlen-user-profile` | analysis-skills | Generate comprehensive user profile analysis |
-| `tweetlen-tweet-analysis` | analysis-skills | Analyze tweet engagement and content patterns |
-| `tweetlen-user-comparison` | analysis-skills | Compare two or more user accounts side by side |
-| `tweetlen-influence-report` | analysis-skills | Generate KOL influence and reach reports |
-| `tweetlen-topic-research` | research-skills | Research topics across tweets, users, and communities |
-| `tweetlen-trend-monitor` | research-skills | Monitor and analyze trending topics |
-| `tweetlen-community-explorer` | research-skills | Deep dive into community structure and activity |
-| `tweetlen-list-explorer` | research-skills | Explore curated lists and their members |
-| `tweetlen-user-lookup` | utility-skills | Quick user information lookup |
-| `tweetlen-job-search` | utility-skills | Search Twitter job listings |
+### API Skills — Direct Endpoint Wrappers
+
+Low-level building blocks. Each skill wraps a category of Twitter/X API endpoints with parameter docs and examples.
+
+| Skill | Endpoints | What It Does |
+|-------|:---------:|-------------|
+| `tweetlen-api-user` | 16 | User profiles, followers, following, tweets, replies, media, highlights |
+| `tweetlen-api-tweet` | 7 | Tweet details, comments, retweets, quotes |
+| `tweetlen-api-search` | 4 | Full-text search (v1/v2/v3), autocomplete |
+| `tweetlen-api-community` | 10 | Community search, topics, members, moderators, tweets |
+| `tweetlen-api-list` | 5 | List search, details, members, followers, timeline |
+| `tweetlen-api-trends` | 2 | Available locations, trending topics by region |
+| `tweetlen-api-space` | 1 | Space/audio room details |
+| `tweetlen-api-jobs` | 3 | Job search, details, location suggestions |
+
+### Analysis Skills — Multi-Step Workflows
+
+Combine multiple API calls with analysis logic to produce structured reports.
+
+| Skill | What It Does |
+|-------|-------------|
+| `tweetlen-user-profile` | Comprehensive user analysis: profile + tweets + followers + engagement metrics |
+| `tweetlen-tweet-analysis` | Deep tweet analysis: comments + retweets + quotes + sentiment |
+| `tweetlen-user-comparison` | Side-by-side comparison of two accounts |
+| `tweetlen-influence-report` | KOL influence assessment with tier classification |
+
+### Research Skills — Discovery Workflows
+
+Multi-step research workflows for trend and topic analysis.
+
+| Skill | What It Does |
+|-------|-------------|
+| `tweetlen-topic-research` | Topic sentiment research: search + key voices + comment analysis |
+| `tweetlen-trend-monitor` | Regional trend monitoring with context for top trends |
+| `tweetlen-community-explorer` | Community deep dive: structure, members, moderators, content |
+| `tweetlen-list-explorer` | List exploration: members, timeline, follower analysis |
+
+### Utility Skills — Quick Tools
+
+| Skill | What It Does |
+|-------|-------------|
+| `tweetlen-user-lookup` | Quick username → rest_id resolution with basic profile info |
+| `tweetlen-job-search` | Search Twitter/X job postings with filters |
 
 ## Usage Examples
 
-**Analyze a user's profile:**
+### Analyze a User
 
 ```
-/tweetlen-user-profile @elonmusk
+You: 分析用户 @naval
+You: Who is @pmarca? Give me a full profile analysis.
+You: @elonmusk のプロフィールを分析して
 ```
 
-**Research a topic:**
+### Research a Topic
 
 ```
-/tweetlen-topic-research "artificial intelligence" --lang en
+You: What's Twitter saying about "AI regulation"?
+You: 研究一下大家对 GPT-5 的看法
+You: 「量子コンピュータ」についてのツイートを調べて
 ```
 
-**Compare two accounts:**
+### Monitor Trends
 
 ```
-/tweetlen-user-comparison @openai @anthropic
+You: What's trending in Japan right now?
+You: 看看美国现在什么话题最火
+You: 世界のトレンドを教えて
 ```
 
-## API Documentation
+### Compare Accounts
 
-For full API documentation and to obtain an API key, visit [api.tweetlen.com](https://api.tweetlen.com).
+```
+You: Compare @openai and @anthropic
+You: 对比 @Google 和 @Microsoft
+```
+
+### Explore Communities
+
+```
+You: Explore the "Generative AI" community on Twitter
+You: 探索 AI 相关的 Twitter 社区
+```
+
+## Architecture
+
+```
+┌─────────────────────────────────────────────┐
+│              Claude Code + Skills            │
+├──────────┬──────────┬───────────┬────────────┤
+│ Analysis │ Research │  Utility  │  API       │
+│ Skills   │ Skills   │  Skills   │  Skills    │
+├──────────┴──────────┴───────────┴────────────┤
+│           Tweetlen API (api.tweetlen.com)     │
+│              Authorization: Bearer twtl_xxx   │
+├──────────────────────────────────────────────┤
+│              Twitter/X Platform               │
+└──────────────────────────────────────────────┘
+```
+
+## API Reference
+
+| Base URL | Auth | Method | Pagination |
+|----------|------|--------|------------|
+| `https://api.tweetlen.com/v2` | `Bearer twtl_xxx` | GET | Cursor-based |
+
+For full API documentation, visit **[api.tweetlen.com](https://api.tweetlen.com)**.
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request.
 
 ## License
 
-MIT
+[MIT](LICENSE)
