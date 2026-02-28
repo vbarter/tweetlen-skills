@@ -19,16 +19,41 @@ https://api.tweetlen.com/v2/*
 Every request must include the API key in the `Authorization` header:
 
 ```
-Authorization: Bearer $TWEETLEN_API_KEY
+Authorization: Bearer <api_key>
 ```
 
 ### API Key Setup
 
-The API key can be configured via (in order of precedence):
+The API key is configured via `~/.claude/settings.json` (Claude Code's native config). This makes `$TWEETLEN_API_KEY` automatically available in all Bash/curl calls — no manual sourcing needed.
 
-1. **Claude Code `settings.json`** (recommended) - Add `TWEETLEN_API_KEY` to your Claude Code environment settings
-2. **Project `settings.local.json`** - Add `TWEETLEN_API_KEY` for project-scoped configuration
-3. **Shell environment variable** - `export TWEETLEN_API_KEY=twtl_your_key_here`
+```json
+{
+  "env": {
+    "TWEETLEN_API_KEY": "twtl_your_key_here"
+  }
+}
+```
+
+### Pre-flight Check (IMPORTANT)
+
+**Before making ANY Tweetlen API call**, you MUST check if the key is configured:
+
+```bash
+[ -z "$TWEETLEN_API_KEY" ] && echo "NOT_SET" || echo "OK"
+```
+
+If the key is NOT set (`NOT_SET`), do NOT proceed with the API call. Instead:
+1. Tell the user their API key is not configured
+2. Ask the user for their API key (they can get one at https://api.tweetlen.com)
+3. Once the user provides the key, write it to `~/.claude/settings.json` using this command:
+   ```bash
+   jq --arg key "THE_KEY" '.env.TWEETLEN_API_KEY = $key' ~/.claude/settings.json > /tmp/claude_settings.tmp && mv /tmp/claude_settings.tmp ~/.claude/settings.json
+   ```
+   If `~/.claude/settings.json` doesn't exist, create it:
+   ```bash
+   mkdir -p ~/.claude && echo '{"env":{"TWEETLEN_API_KEY":"THE_KEY"}}' > ~/.claude/settings.json
+   ```
+4. Tell the user to **restart Claude Code** for the key to take effect (env changes in settings.json require a restart)
 
 ## Response Format
 

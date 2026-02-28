@@ -6,7 +6,7 @@ description: "Twitter/X Search API - Full-text search (v1/v2/v3) and autocomplet
 ## Prerequisites
 
 - Tweetlen API Key required. Get one at [api.tweetlen.com](https://api.tweetlen.com)
-- Set env var: `TWEETLEN_API_KEY=twtl_your_key_here`
+- Run `setup.sh` or add `TWEETLEN_API_KEY` to `~/.claude/settings.json` under `env`
 
 ## API Base Info
 

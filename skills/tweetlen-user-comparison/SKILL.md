@@ -6,7 +6,7 @@ description: "Compare two Twitter/X users side by side. Analyzes profiles, conte
 ## Prerequisites
 
 - Tweetlen API Key required. Get one at [api.tweetlen.com](https://api.tweetlen.com)
-- Set env var: `TWEETLEN_API_KEY=twtl_your_key_here`
+- Run `setup.sh` or add `TWEETLEN_API_KEY` to `~/.claude/settings.json` under `env`
 
 ## Input Parsing
 

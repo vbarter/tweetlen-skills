@@ -17,19 +17,47 @@ Query users, analyze tweets, research topics, and monitor trends — all through
 
 ---
 
-## Prerequisites
+## Installation
+
+```bash
+# 1. Add the marketplace
+/plugin marketplace add vbarter/tweetlen-skills
+
+# 2. Install the plugins you need
+/plugin install api-skills@tweetlen-skills
+/plugin install analysis-skills@tweetlen-skills
+/plugin install research-skills@tweetlen-skills
+/plugin install utility-skills@tweetlen-skills
+
+# 3. Configure your API key (interactive)
+bash ~/.claude/plugins/tweetlen-skills/setup.sh
+```
+
+## API Key Setup
 
 > [!IMPORTANT]
 > **You need a Tweetlen API Key to use these skills.**
 >
 > 1. Sign up at **[api.tweetlen.com](https://api.tweetlen.com)**
 > 2. Create an API Key in the dashboard (format: `twtl_xxx`)
-> 3. Configure the key using one of the methods below:
+> 3. Configure the key using **one** of the methods below:
+
+### Quick Setup (Recommended)
+
+Run the setup script — it writes the key to `~/.claude/settings.json` automatically:
+
+```bash
+bash ~/.claude/plugins/tweetlen-skills/setup.sh
+```
+
+> Restart Claude Code after setup for the key to take effect.
+
+### Manual Setup
 
 <details open>
 <summary><b>Option 1: Claude Code Settings (Recommended)</b></summary>
 
-Add to `~/.claude/settings.json` — one-time setup, works across all projects:
+Add `TWEETLEN_API_KEY` to the `env` field in `~/.claude/settings.json`:
 
 ```json
 {
@@ -39,19 +67,12 @@ Add to `~/.claude/settings.json` — one-time setup, works across all projects:
 }
 ```
 
-</details>
-
-<details>
-<summary><b>Option 2: Environment Variable</b></summary>
-
-```bash
-export TWEETLEN_API_KEY=twtl_your_key_here
-```
+This is a one-time setup. The key is automatically available in all projects and all Bash/curl calls.
 
 </details>
 
 <details>
-<summary><b>Option 3: Project-Level Config</b></summary>
+<summary><b>Option 2: Project-Level Config</b></summary>
 
 Create `.claude/settings.local.json` in your project root (git-ignored):
 
@@ -65,18 +86,16 @@ Create `.claude/settings.local.json` in your project root (git-ignored):
 
 </details>
 
-## Installation
+<details>
+<summary><b>Option 3: Shell Environment Variable</b></summary>
 
 ```bash
-# Add the marketplace
-/plugin marketplace add vbarter/tweetlen-skills
-
-# Install the plugins you need
-/plugin install api-skills@tweetlen-skills
-/plugin install analysis-skills@tweetlen-skills
-/plugin install research-skills@tweetlen-skills
-/plugin install utility-skills@tweetlen-skills
+export TWEETLEN_API_KEY=twtl_your_key_here
 ```
+
+> Note: This requires the variable to be exported in your shell profile (`.zshrc` / `.bashrc`).
+
+</details>
 
 ## Quick Start
 

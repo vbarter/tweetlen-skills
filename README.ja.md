@@ -17,7 +17,23 @@ Claude Code を Twitter/X データ分析アシスタントに。
 
 ---
 
-## 前提条件
+## インストール
+
+```bash
+# 1. マーケットプレイスを追加
+/plugin marketplace add vbarter/tweetlen-skills
+
+# 2. 必要なプラグインをインストール
+/plugin install api-skills@tweetlen-skills
+/plugin install analysis-skills@tweetlen-skills
+/plugin install research-skills@tweetlen-skills
+/plugin install utility-skills@tweetlen-skills
+
+# 3. API Key を設定（対話式）
+bash ~/.claude/plugins/tweetlen-skills/setup.sh
+```
+
+## API Key の設定
 
 > [!IMPORTANT]
 > **このスキルを使用するには Tweetlen API Key が必要です。**
@@ -26,10 +42,22 @@ Claude Code を Twitter/X データ分析アシスタントに。
 > 2. ダッシュボードで API Key を発行（形式: `twtl_xxx`）
 > 3. 以下のいずれかの方法で Key を設定：
 
+### クイックセットアップ（推奨）
+
+セットアップスクリプトを実行すると、`~/.claude/settings.json` に Key を自動書き込みします：
+
+```bash
+bash ~/.claude/plugins/tweetlen-skills/setup.sh
+```
+
+> セットアップ後、Claude Code を再起動してください。
+
+### 手動設定
+
 <details open>
 <summary><b>方法 1: Claude Code 設定ファイル（推奨）</b></summary>
 
-`~/.claude/settings.json` に追加 — 一度設定すれば全プロジェクトで有効：
+`~/.claude/settings.json` の `env` フィールドに `TWEETLEN_API_KEY` を追加：
 
 ```json
 {
@@ -39,19 +67,12 @@ Claude Code を Twitter/X データ分析アシスタントに。
 }
 ```
 
-</details>
-
-<details>
-<summary><b>方法 2: 環境変数</b></summary>
-
-```bash
-export TWEETLEN_API_KEY=twtl_your_key_here
-```
+一度設定すれば全プロジェクトで有効。Bash/curl 呼び出し時に環境変数として自動注入されます。
 
 </details>
 
 <details>
-<summary><b>方法 3: プロジェクト単位の設定</b></summary>
+<summary><b>方法 2: プロジェクト単位の設定</b></summary>
 
 プロジェクトルートに `.claude/settings.local.json` を作成（git 管理外）：
 
@@ -65,18 +86,16 @@ export TWEETLEN_API_KEY=twtl_your_key_here
 
 </details>
 
-## インストール
+<details>
+<summary><b>方法 3: シェル環境変数</b></summary>
 
 ```bash
-# マーケットプレイスを追加
-/plugin marketplace add vbarter/tweetlen-skills
-
-# 必要なプラグインをインストール
-/plugin install api-skills@tweetlen-skills
-/plugin install analysis-skills@tweetlen-skills
-/plugin install research-skills@tweetlen-skills
-/plugin install utility-skills@tweetlen-skills
+export TWEETLEN_API_KEY=twtl_your_key_here
 ```
+
+> 注意: `.zshrc` / `.bashrc` で export する必要があります。
+
+</details>
 
 ## クイックスタート
 

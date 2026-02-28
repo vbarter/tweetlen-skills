@@ -17,7 +17,23 @@
 
 ---
 
-## 前置条件
+## 安装
+
+```bash
+# 1. 添加 marketplace
+/plugin marketplace add vbarter/tweetlen-skills
+
+# 2. 安装需要的插件
+/plugin install api-skills@tweetlen-skills
+/plugin install analysis-skills@tweetlen-skills
+/plugin install research-skills@tweetlen-skills
+/plugin install utility-skills@tweetlen-skills
+
+# 3. 配置 API Key（交互式）
+bash ~/.claude/plugins/tweetlen-skills/setup.sh
+```
+
+## API Key 配置
 
 > [!IMPORTANT]
 > **使用本 Skills 需要 Tweetlen API Key**
@@ -26,10 +42,22 @@
 > 2. 在控制台创建 API Key（格式：`twtl_xxx`）
 > 3. 按以下任一方式配置 Key：
 
+### 一键配置（推荐）
+
+运行安装脚本，自动将 Key 写入 `~/.claude/settings.json`：
+
+```bash
+bash ~/.claude/plugins/tweetlen-skills/setup.sh
+```
+
+> 配置完成后需重启 Claude Code 生效。
+
+### 手动配置
+
 <details open>
 <summary><b>方式一：写入 Claude Code 配置（推荐）</b></summary>
 
-编辑 `~/.claude/settings.json`，一次配置，所有项目通用：
+编辑 `~/.claude/settings.json`，在 `env` 字段中添加 `TWEETLEN_API_KEY`：
 
 ```json
 {
@@ -39,19 +67,12 @@
 }
 ```
 
-</details>
-
-<details>
-<summary><b>方式二：环境变量</b></summary>
-
-```bash
-export TWEETLEN_API_KEY=twtl_your_key_here
-```
+一次配置，所有项目通用，Bash/curl 调用时自动注入环境变量。
 
 </details>
 
 <details>
-<summary><b>方式三：项目级配置</b></summary>
+<summary><b>方式二：项目级配置</b></summary>
 
 在项目根目录创建 `.claude/settings.local.json`（不会被 git 提交）：
 
@@ -65,18 +86,16 @@ export TWEETLEN_API_KEY=twtl_your_key_here
 
 </details>
 
-## 安装
+<details>
+<summary><b>方式三：Shell 环境变量</b></summary>
 
 ```bash
-# 添加 marketplace
-/plugin marketplace add vbarter/tweetlen-skills
-
-# 安装需要的插件
-/plugin install api-skills@tweetlen-skills
-/plugin install analysis-skills@tweetlen-skills
-/plugin install research-skills@tweetlen-skills
-/plugin install utility-skills@tweetlen-skills
+export TWEETLEN_API_KEY=twtl_your_key_here
 ```
+
+> 注意：需在 Shell 配置文件（`.zshrc` / `.bashrc`）中 export 才能持久生效。
+
+</details>
 
 ## 快速上手
 
