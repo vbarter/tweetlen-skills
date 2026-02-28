@@ -121,7 +121,7 @@ else
   read -rp "Test the API key now? (Y/n): " TEST
   if [[ "$TEST" =~ ^[Nn]$ ]]; then
     echo ""
-    echo "Setup complete! Restart Claude Code for the key to take effect."
+    echo "Setup complete! You can use Tweetlen skills now."
     exit 0
   fi
   echo "Testing..."
@@ -142,4 +142,4 @@ else
 fi
 
 echo ""
-echo "Setup complete! Restart Claude Code for the key to take effect."
+echo "Setup complete! You can use Tweetlen skills now — no restart needed."

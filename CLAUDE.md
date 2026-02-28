@@ -24,7 +24,7 @@ Authorization: Bearer <api_key>
 
 ### API Key Setup
 
-The API key is configured via `~/.claude/settings.json` (Claude Code's native config). This makes `$TWEETLEN_API_KEY` automatically available in all Bash/curl calls — no manual sourcing needed.
+The API key is stored in `~/.claude/settings.json`:
 
 ```json
 {
@@ -34,18 +34,27 @@ The API key is configured via `~/.claude/settings.json` (Claude Code's native co
 }
 ```
 
-### Pre-flight Check (IMPORTANT)
+### Making API Calls (IMPORTANT)
 
-**Before making ANY Tweetlen API call**, you MUST check if the key is configured:
+**Do NOT rely on `$TWEETLEN_API_KEY` environment variable** — it may not be loaded depending on shell initialization. Instead, always read the key from the config file inline:
 
 ```bash
-[ -z "$TWEETLEN_API_KEY" ] && echo "NOT_SET" || echo "OK"
+curl -s -H "Authorization: Bearer $(jq -r '.env.TWEETLEN_API_KEY' ~/.claude/settings.json)" \
+  "https://api.tweetlen.com/v2/..."
 ```
 
-If the key is NOT set (`NOT_SET`), do NOT proceed with the API call. Instead:
+### Pre-flight Check
+
+**Before making ANY Tweetlen API call**, check if the key is configured:
+
+```bash
+jq -r '.env.TWEETLEN_API_KEY // empty' ~/.claude/settings.json 2>/dev/null
+```
+
+If the output is empty, do NOT proceed with the API call. Instead:
 1. Tell the user their API key is not configured
 2. Ask the user for their API key (they can get one at https://api.tweetlen.com)
-3. Once the user provides the key, write it to `~/.claude/settings.json` using this command:
+3. Once the user provides the key, write it to `~/.claude/settings.json`:
    ```bash
    jq --arg key "THE_KEY" '.env.TWEETLEN_API_KEY = $key' ~/.claude/settings.json > /tmp/claude_settings.tmp && mv /tmp/claude_settings.tmp ~/.claude/settings.json
    ```
@@ -53,7 +62,7 @@ If the key is NOT set (`NOT_SET`), do NOT proceed with the API call. Instead:
    ```bash
    mkdir -p ~/.claude && echo '{"env":{"TWEETLEN_API_KEY":"THE_KEY"}}' > ~/.claude/settings.json
    ```
-4. Tell the user to **restart Claude Code** for the key to take effect (env changes in settings.json require a restart)
+4. After writing, the key is immediately available via `jq` reads — no restart needed
 
 ## Response Format
 
@@ -97,7 +106,8 @@ If the key is NOT set (`NOT_SET`), do NOT proceed with the API call. Instead:
 
 ## Conventions
 
-- All skills use `WebFetch` or `Bash` (curl) to call the Tweetlen API
+- All skills use `Bash` (curl) to call the Tweetlen API
+- **Always read the key from config file inline**: `$(jq -r '.env.TWEETLEN_API_KEY' ~/.claude/settings.json)` — never rely on `$TWEETLEN_API_KEY` env var
 - Always check for `success: true` in the response before processing data
 - Handle errors gracefully and display the error message to the user
 - Include relevant metrics and statistics in reports when available

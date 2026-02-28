@@ -50,7 +50,7 @@ Run the setup script — it writes the key to `~/.claude/settings.json` automati
 bash ~/.claude/plugins/tweetlen-skills/setup.sh
 ```
 
-> Restart Claude Code after setup for the key to take effect.
+> No restart needed — the key is read directly from the config file.
 
 ### Manual Setup
 

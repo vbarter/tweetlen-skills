@@ -50,7 +50,7 @@ bash ~/.claude/plugins/tweetlen-skills/setup.sh
 bash ~/.claude/plugins/tweetlen-skills/setup.sh
 ```
 
-> 配置完成后需重启 Claude Code 生效。
+> 无需重启 — key 会从配置文件中直接读取。
 
 ### 手动配置
 

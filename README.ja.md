@@ -50,7 +50,7 @@ bash ~/.claude/plugins/tweetlen-skills/setup.sh
 bash ~/.claude/plugins/tweetlen-skills/setup.sh
 ```
 
-> セットアップ後、Claude Code を再起動してください。
+> 再起動不要 — Key は設定ファイルから直接読み込まれます。
 
 ### 手動設定
 
